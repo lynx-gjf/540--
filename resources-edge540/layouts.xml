@@ -1,0 +1,53 @@
+<!-- Edge MTB 240x320 (240x400) -->
+<layouts>
+   <layout id="layout2x2">
+        <!-- 240x126 (240x156) -->
+        <!-- 240x62 (240x78) -->
+        <drawable class="Background" />
+        <label id="speedIcon" x="5" y="5" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.bikeDataIconFont" text="D"/>
+        <label id="speed" x="25" y="1" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.mediumNumFont"/>
+        <label id="cadenceIcon" x="5" y="38" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.bikeDataIconFont" text="A"/>
+        <label id="cadence" x="25" y="38" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.smallNumFont"/>
+        <label id="timer" x="225" y="5" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.smallNumFont"/>
+        <label id="hrNum" x="95" y="38" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.smallNumFont"/>
+        <label id="distance" x="225" y="38" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.smallNumFont"/>
+        <label id="distanceIcon" x="242" y="38" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.bikeDataIconFont" text="C"/>
+        <label id="timerIcon" x="244" y="5" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.bikeDataIconFont" text="B"/>
+    </layout>
+    <layout id="layout2x1">
+        <!-- 240x62 (240x78) -->
+        <drawable class="Background" />
+        <label id="speedIcon" x="5" y="5" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.bikeDataIconFont" text="D"/>
+        <label id="speed" x="25" y="1" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.mediumNumFont"/>
+        <label id="cadenceIcon" x="5" y="38" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.bikeDataIconFont" text="A"/>
+        <label id="cadence" x="25" y="38" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.smallNumFont"/>
+        <label id="timer" x="225" y="5" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.smallNumFont"/>
+        <label id="hrNum" x="95" y="38" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.smallNumFont"/>
+        <label id="distance" x="225" y="38" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.smallNumFont"/>
+        <label id="distanceIcon" x="242" y="38" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.bikeDataIconFont" text="C"/>
+        <label id="timerIcon" x="244" y="5" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.bikeDataIconFont" text="B"/>
+    </layout>
+    <layout id="layout1x1">
+        <!-- 119x62 (119x78) -->
+        <!-- 240x62 (240x78) -->
+        <drawable class="Background" />
+        <label id="speedIcon" x="5" y="5" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.bikeDataIconFont" text="D"/>
+        <label id="speed" x="25" y="1" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.mediumNumFont"/>
+        <label id="cadenceIcon" x="5" y="38" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.bikeDataIconFont" text="A"/>
+        <label id="cadence" x="25" y="38" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.smallNumFont"/>
+        <label id="timer" x="225" y="5" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.smallNumFont"/>
+        <label id="hrNum" x="95" y="38" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.smallNumFont"/>
+        <label id="distance" x="225" y="38" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.smallNumFont"/>
+        <label id="distanceIcon" x="242" y="38" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.bikeDataIconFont" text="C"/>
+        <label id="timerIcon" x="244" y="5" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.bikeDataIconFont" text="B"/>
+
+
+        <!-- <label id="speedIcon" x="117" y="1" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.bikeDataIconFont" text="D"/>
+        <label id="distanceIcon" x="117" y="26" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.bikeDataIconFont" text="C"/>
+        <label id="timerIcon" x="117" y="51" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.bikeDataIconFont" text="B"/>
+        <label id="speed" x="100" y="1" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.smallNumFont"/>
+        <label id="distance" x="100" y="26" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.smallNumFont"/>
+        <label id="timer" x="100" y="51" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.smallNumFont"/> -->
+
+    </layout>
+</layouts>

@@ -1,0 +1,11 @@
+<resources>
+    <string id="fieldLabel">tempó</string>
+    <string id="distanceLabel">táv</string>
+    <string id="timerLabel">idő</string>
+    <string id="avgSpeedLabel">átl.</string>
+    <string id="cadenceLabel">pedál</string>
+    <string id="North">É</string>
+    <string id="West">NY</string>
+    <string id="East">K</string>
+    <string id="South">D</string>
+</resources>

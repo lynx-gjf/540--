@@ -1,0 +1,4 @@
+<drawables>
+    <bitmap id="LauncherIcon" filename="bc_logo.jpg" />
+    <bitmap id="imageVRainbowBar" filename="colorbar_75x15.png" automaticPalette="false"/>
+</drawables>

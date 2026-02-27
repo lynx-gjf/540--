@@ -1,0 +1,11 @@
+<resources>
+    <string id="fieldLabel">speed</string>
+    <string id="distanceLabel">dist</string>
+    <string id="timerLabel">timer</string>
+    <string id="avgSpeedLabel">avg.</string>
+    <string id="cadenceLabel">cad.</string>
+    <string id="North">N</string>
+    <string id="West">W</string>
+    <string id="East">E</string>
+    <string id="South">S</string>
+</resources>

@@ -1,0 +1,28 @@
+This is a garmin Edge cycling computer data field. Its purpose is to display more data in one place, overcoming the limitations of the factory one-block/one-data split. I didn't want a full screen solution though, because I use other ConnectIQ data fields already from other developers, which unfortunately can't be inserted into a custom screen.
+
+My data field displays 3 sizes of slightly different data, adapted to my own needs. The 2x2 big size is my main choice, the 2x1 line I use under the map, and the 1x1 is just why not make it.
+
+current speed
+average speed
+current cadence
+climb %
+heart rate & zones
+compass
+wind direction
+radar speed
+distance travelled
+moving time
+
+Enhanced data fields
+current speed - Its color marked: Green if the current speed is the same or faster than the average speed. Yellow if it is slower but not more than 1km/h or 1Mi/h, and orange if it is even slower than that. Also there is a triangled decimal dot, that show our speed is faster or slower than average (for color blinds or just simple a second sign).
+
+climb % - It is calculated from measured data, if slope the number is negative.
+
+heart rate zones - Color coded zone bar, the zone limits from your Garmin setting.
+
+compass , wind , radar speed - Those data using the same place and changing dinamic.
+Default is the compass. If there is weather informations the wind direction also appers on the circle around the compass. If there is fresh wind data - we using it, anyway if we are offline and it is more than one hour old, it start use the hourly forecast. The weather information coming from Garmin provided weather data.
+If we have radar and wehicle(s) arriving, it show the fastest one's speed replaced the compass place. If the speed moderate the number in a green circle, the ok speed means yellow and the fast one with red circle. After the wehicle pass, we turn back to compass.
+
+History
+v1.0.4 Initial release

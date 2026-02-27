@@ -1,0 +1,11 @@
+<resources>
+    <string id="device">edge540</string>
+    <jsonData id="SimulatorFontPaddings">[0, 0, 0, 0, 0, 7, 6, 8, 11]</jsonData>
+    <jsonData id="DeviceFontPaddings">[0, 0, 0, 0, 0, 5, 6, 8, 11]</jsonData>
+    <jsonData id="fontSizes">[10, 13, 16, 18, 30, 35, 41, 54, 67]</jsonData>
+    <!-- csak a betű <jsonData id="fontSizes">[9, 10, 13, 14, 22, 24, 27, 35, 42]</jsonData> -->
+    <font id="largeSpeedFont" filename="../resources/fonts/garminrobo-46.fnt" filter="[]()-.:0123456789"  antialias="true"/>
+    <font id="mediumNumFont" filename="../resources/fonts/garminrobo-32.fnt" filter="[](),-.:0123456789"  antialias="true"/>
+    <font id="smallNumFont" filename="../resources/fonts/garminrobo-22.fnt" filter="[](),-.:0123456789"  antialias="true"/>
+    <font id="bikeDataIconFont" filename="../resources/fonts/bikedataicons.fnt" filter="ABCDEFG" antialias="true"/>
+</resources>
