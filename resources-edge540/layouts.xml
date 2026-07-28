@@ -22,7 +22,7 @@
         <label id="cadenceIcon" x="5" y="38" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.bikeDataIconFont" text="A"/>
         <label id="cadence" x="25" y="38" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.smallNumFont"/>
         <label id="timer" x="225" y="5" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.smallNumFont"/>
-        <label id="hrNum" x="95" y="38" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.smallNumFont"/>
+        <label id="hrNum" x="90" y="38" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.smallNumFont"/>
         <label id="distance" x="225" y="38" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.smallNumFont"/>
         <label id="distanceIcon" x="242" y="38" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.bikeDataIconFont" text="C"/>
         <label id="timerIcon" x="244" y="5" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.bikeDataIconFont" text="B"/>
