@@ -1,3 +1,4 @@
 {
-    "prettierMonkeyC.disableJungleFixes": true
+    "prettierMonkeyC.disableJungleFixes": true,
+    "monkeyC.typeCheckLevel": "Off"
 }
