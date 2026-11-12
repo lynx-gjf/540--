@@ -20,9 +20,7 @@ climb % - It is calculated from measured data, if slope the number is negative.
 
 heart rate zones - Color coded zone bar, the zone limits from your Garmin setting.
 
-compass , wind , radar speed - Those data using the same place and changing dinamic.
-Default is the compass. If there is weather informations the wind direction also appers on the circle around the compass. If there is fresh wind data - we using it, anyway if we are offline and it is more than one hour old, it start use the hourly forecast. The weather information coming from Garmin provided weather data.
-If we have radar and wehicle(s) arriving, it show the fastest one's speed replaced the compass place. If the speed moderate the number in a green circle, the ok speed means yellow and the fast one with red circle. After the wehicle pass, we turn back to compass.
+radar speed - Radar speed is colorized by danger level when a vehicle is detected.
 
 History
 v1.0.4 Initial release

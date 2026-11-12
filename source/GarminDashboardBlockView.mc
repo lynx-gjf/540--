@@ -77,8 +77,6 @@ class GarminDashboardBlockView extends WatchUi.DataField {
     private var _iconFont;
     //! Simu/Device padding
     private var _padding;
-    //! Weather function class
-    private var _weather;
     //! All sensors data, always read from this
     private var _sensors;
     //! Access the radar information
@@ -145,8 +143,6 @@ class GarminDashboardBlockView extends WatchUi.DataField {
             :carSpeed    => 0,
             :carRelSpeed => 0,
             :carDanger   => 0,
-            :windDir     => null,
-            :windSpeed   => null,
         };
     }
 
@@ -165,7 +161,6 @@ class GarminDashboardBlockView extends WatchUi.DataField {
             _speedMod = 2.23694;
             _units = ["mi", "mi/h", "F", "E"];
         }
-        _weather = new MyWeather();
         _iconFont = Application.loadResource( Rez.Fonts.bikeDataIconFont ) as FontResource;
     }
 
@@ -239,11 +234,6 @@ class GarminDashboardBlockView extends WatchUi.DataField {
         if (info.currentHeartRate != null) {
             _sensors[:hr] = info.currentHeartRate;
         }
-        if (info.currentHeading != null) {
-            // 0 is north. -PI/2 radians (90deg CCW) is west, and +PI/2 radians (90deg CW) is east. MultiCompass need it.
-            // _sensors[:heading] = (info.currentHeading < 0) ? 360.0 + Math.toDegrees(info.currentHeading) : Math.toDegrees(info.currentHeading);
-            _sensors[:heading] = info.currentHeading;
-        }
         _sensors[:slope] = computeGradient(info);
 
         if (_radarListener != null) {
@@ -256,11 +246,6 @@ class GarminDashboardBlockView extends WatchUi.DataField {
         // _sensors[:carSpeed] = 95;
         // _sensors[:carDanger] = 3;
 
-        if (_weather.get(info)) {
-            var wind = _weather.getWind();
-            _sensors[:windDir] = wind[:dir];
-            _sensors[:windSpeed] = wind[:speed];
-        }
     }
 
 
@@ -310,17 +295,6 @@ class GarminDashboardBlockView extends WatchUi.DataField {
                 :hr => _sensors[:hr],
                 :background => getBackgroundColor(),
             });
-        }
-
-        if (View.findDrawableById("w_compass") != null) {
-            var wc = View.findDrawableById("w_compass") as WindCompass;
-            wc.setHeading(_sensors[:heading]);
-            wc.labelColor = numColor;
-            wc.circleBackground = getBackgroundColor();
-            if (_sensors[:windDir] != null) {
-                wc.setWind(_sensors[:windDir]);
-            }
-            wc.setRadar(_sensors[:carSpeed], _sensors[:carDanger]);
         }
 
         View.onUpdate(dc);  // update the layouts, do it BEFORE extra drawing !!!!!!!

@@ -27,8 +27,6 @@ Edge 540, Edge 840, Edge MTB
 | current cadence | | X | X* | |
 | climb % | negative if slope | X | X | X* |
 | heart rate & zones | colorized bar | X | | |
-| compass | (see below) | X | | |
-| wind direction | included into compass | X | | |
 | radar speed | with color support | X | X | |
 | distance travelled | | | X | X* |
 | moving time | | | X | X* |
@@ -47,10 +45,7 @@ Edge 540, Edge 840, Edge MTB
 
 **heart rate zones** The highest 3 color coded zone bar. The zone limits from your Garmin HR zones. On the top, there is the actual HR with number.
 
-**compass , wind , radar speed** Those data using the same place and changing dinamic.
-* Default is the compass. If there is weather informations the wind direction also appers on the circle around the compass with purple section. If there is fresh wind data - we using is, anyway if we are offline and  it is more than one hour old, it start use the hourly forecast. All information from official garmin weather data, the accurate of information is depend of that.
-* If we have radar and wehicle(s) arriving, it show the fastest one's speed. If the speed moderate the number in a green circle, the ok speed means yellow and the fast one with red circle. After the wehicle pass, we turn back to compass.
-* In the 2x1 datafield there is only radar information, if a vehicle arriving.
+**radar speed** Radar speed is colorized by danger level when a vehicle is detected.
 
 ## Garmin IQ store
 https://apps.garmin.com/en-US/apps/bf65ec33-0655-485c-83eb-bdecebcd23d4
