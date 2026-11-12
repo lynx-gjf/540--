@@ -1,5 +1,4 @@
 <resources>
-    <string id="fieldLabel">tempó</string>
     <string id="distanceLabel">táv</string>
     <string id="timerLabel">idő</string>
     <string id="avgSpeedLabel">átl.</string>

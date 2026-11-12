@@ -42,10 +42,8 @@
         <label id="timerIcon" x="244" y="5" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.bikeDataIconFont" text="B"/>
 
 
-        <!-- <label id="speedIcon" x="117" y="1" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.bikeDataIconFont" text="D"/>
-        <label id="distanceIcon" x="117" y="26" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.bikeDataIconFont" text="C"/>
+        <!--
         <label id="timerIcon" x="117" y="51" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.bikeDataIconFont" text="B"/>
-        <label id="speed" x="100" y="1" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.smallNumFont"/>
         <label id="distance" x="100" y="26" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.smallNumFont"/>
         <label id="timer" x="100" y="51" justification="Graphics.TEXT_JUSTIFY_RIGHT" font="@Fonts.smallNumFont"/> -->
 

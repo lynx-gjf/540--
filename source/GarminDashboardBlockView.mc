@@ -3,56 +3,6 @@ import Toybox.Lang;
 import Toybox.WatchUi;
 import Toybox.Activity;
 import Toybox.Graphics;
-import Toybox.Sensor;
-import Toybox.Ant;
-import Toybox.AntPlus;
-import Toybox.Time;
-
-/*!
- * Radar event listener
-*/
-class MyBikeRadarListener extends AntPlus.BikeRadarListener {
-    //! RadarTarget array
-    var targets = null;
-    //! The fastest car speed
-    var maxSpeed = 0f;
-    //! Last radar event time
-    var lastUpdate = null;
-
-    function initialize() {
-        BikeRadarListener.initialize();
-        manualClear();
-    }
-
-
-    function onBikeRadarUpdate(data as Lang.Array<AntPlus.RadarTarget>) {
-        targets = data;
-        maxSpeed = 0;
-        // find the fastest car behind
-        for (var f=0; f<data.size(); f++) {
-            if (data[f].speed == 0) {
-                break;
-            } else if (data[f].speed > maxSpeed) {
-                maxSpeed = data[f].speed;
-            }
-        }
-        lastUpdate = Time.now().value();
-    }
-
-
-    //! Last radar event time in second
-    function getDataAge() as Integer {
-        return (lastUpdate == null) ? 0x7FFFFFF : Time.now().value() - lastUpdate;
-    }
-
-
-    //! Clear the radar information if the listener is stuck
-    function manualClear() as Void {
-        targets = null;
-        maxSpeed = 0f;
-        lastUpdate = Time.now().value();
-    }
-}
 
 
 /*!
@@ -65,67 +15,35 @@ class MyBikeRadarListener extends AntPlus.BikeRadarListener {
     @note FONT_MEDIUM = garmin label, FONT_NUMBER_MEDIUM = garmin 2 lines num, FONT_NUMBER_HOT = garmin 1 line num
 */
 class GarminDashboardBlockView extends WatchUi.DataField {
-    //! Active layout (2x2, 2x1, 1x1)
-    private var _layout as String = "2x2";
-    //! Edge in dark mode?
-    private var _darkMode;
     //! speed multiplier km/mi
     private var _speedMod = 1;
     //! unit strings [dist, speed, icon dist, icon speed]
     private var _units as Array;
-    //! data icons
-    private var _iconFont;
     //! Simu/Device padding
     private var _padding;
     //! All sensors data, always read from this
     private var _sensors;
-    //! Access the radar information
-    private var _radarListener;
-    private var _radar = null;
-    //! max radar speed for circle color [green, yellow ]
-    private const radarDangerLimits = [45, 60];
     //! standard data color
     private var _colorDataText as Array = [
-        "speed", "distance", "timer", "cadence", "avgSpeed", "slope", "hrIcon", "hrNum",
+        "speed", "distance", "timer", "cadence", "avgSpeed", "hrNum",
     ];
     //! label color
     private var _colorLabelText as Array = [
-        "fieldLabel", "cadLabel", "avgSpLabel", "slopeIcon", "distanceIcon", "timerIcon", "cadenceIcon", "speedIcon",
+        "cadLabel", "distanceIcon", "timerIcon", "cadenceIcon", "speedIcon",
     ];
     //! reAlign texts
     private var _alignText as Array = [
-        "fieldLabel", "cadLabel", "avgSpLabel", "hrNum",
+        "cadLabel", "hrNum",
     ];
 
-    // current speed is [ok, little slow, real slow]
-    private var speedColors = [Graphics.COLOR_DK_GREEN, Graphics.COLOR_YELLOW, Graphics.COLOR_RED];
     // colors for day/dark mode
     private var baseColors = {
         :sunNumColor => Graphics.COLOR_BLACK,
         :sunLabelColor => 0x777777,         // Graphics.COLOR_DK_GRAY,
-        :sunSpeedColors  => [Graphics.COLOR_DK_GREEN, Graphics.COLOR_YELLOW, Graphics.COLOR_RED],
 
         :darkNumColor => Graphics.COLOR_WHITE,
         :darkLabelColor => 0x999999,
-        :darkSpeedColors => [Graphics.COLOR_GREEN, Graphics.COLOR_YELLOW, Graphics.COLOR_RED],
     };
-
-    private var _gradientData = [       // slope
-        0f,    // 0. Altitude last estimate
-        0f,    // 1. Altitude kalman gain
-        0.1f,  // 2. Altitude process noise
-        0.5f,  // 3. Altitude estimation error
-
-        0f,    // 4. Distance last estimate
-        0f,    // 5. Distance kalman gain
-        0.1f,  // 6. Distance process noise
-        0.5f,  // 7. Distance estimation error
-
-        0f,    // 8. Last elapsed distance
-        0f,    // 9. Last calculation time
-        0f,    // 10. Last gradient
-        false  // 11. Whether gradient should be calculated
-    ];
 
 
     //! Reset _sensors[] to 0 or null
@@ -134,15 +52,10 @@ class GarminDashboardBlockView extends WatchUi.DataField {
             :speed       => 0,
             :avgSpeed    => 0,
             :timer       => 0,
-            :slope       => 0,
             :distance    => 0.0f,
             :cadence     => 0,
             :avgCadence  => 0,
-            :heading     => 0.0f,
             :hr          => 0,
-            :carSpeed    => 0,
-            :carRelSpeed => 0,
-            :carDanger   => 0,
         };
     }
 
@@ -150,10 +63,7 @@ class GarminDashboardBlockView extends WatchUi.DataField {
     function initialize() {
         DataField.initialize();
         resetSensors();
-        _gradientData[11] = true;   // Enable slope
         _padding = new Align();
-        _radarListener = new MyBikeRadarListener();
-        _radar = Toybox.AntPlus has :BikeRadar ? new AntPlus.BikeRadar(_radarListener) : null;
         if ( System.getDeviceSettings().distanceUnits == System.UNIT_METRIC) {
             _speedMod = 3.6;
             _units = ["km", "km/h", "C", "D"];
@@ -161,7 +71,6 @@ class GarminDashboardBlockView extends WatchUi.DataField {
             _speedMod = 2.23694;
             _units = ["mi", "mi/h", "F", "E"];
         }
-        _iconFont = Application.loadResource( Rez.Fonts.bikeDataIconFont ) as FontResource;
     }
 
 
@@ -175,23 +84,17 @@ class GarminDashboardBlockView extends WatchUi.DataField {
         if (fieldWidth >= (screenWidth/2) ) {
             if (fieldHeight>=(screenHeight/2)) {
                 View.setLayout(Rez.Layouts.layout2x2(dc));
-                _layout="2x2";
             } else if (fieldHeight>=(screenHeight/4)) {
                 View.setLayout(Rez.Layouts.layout2x2(dc));
-                _layout="2x2";
             } else {
                 View.setLayout(Rez.Layouts.layout2x1(dc));
-                _layout="2x1";
             }
         } else {
             View.setLayout(Rez.Layouts.layout1x1(dc));
-            _layout="1x1";
         }
 
-        setDrawableText("fieldLabel", (WatchUi.loadResource(Rez.Strings.fieldLabel) as String) + " "+ _units[1]);
         setDrawableText("distanceLabel", (WatchUi.loadResource(Rez.Strings.distanceLabel) as String) + " "+ _units[0]);
         setDrawableText("timerLabel", WatchUi.loadResource(Rez.Strings.timerLabel) as String);
-        setDrawableText("avgSpLabel", (WatchUi.loadResource(Rez.Strings.avgSpeedLabel) as String) + " "+ _units[1]);
         setDrawableText("cadLabel", WatchUi.loadResource(Rez.Strings.cadenceLabel) as String);
         setDrawableText("distanceIcon", _units[2]);
         setDrawableText("speedIcon", _units[3]);
@@ -208,10 +111,6 @@ class GarminDashboardBlockView extends WatchUi.DataField {
 
     //!  update class var with fresh data like every second
     function compute(info as Activity.Info) as Void {
-        if ((_radar == null) && (Toybox.AntPlus has :BikeRadar)) {
-            _radar = new AntPlus.BikeRadar(_radarListener);
-        }
-
         resetSensors();
         if (info.currentSpeed != null) {
             _sensors[:speed] = info.currentSpeed * _speedMod;
@@ -234,18 +133,6 @@ class GarminDashboardBlockView extends WatchUi.DataField {
         if (info.currentHeartRate != null) {
             _sensors[:hr] = info.currentHeartRate;
         }
-        _sensors[:slope] = computeGradient(info);
-
-        if (_radarListener != null) {
-            updateRadar();
-        }
-
-        //! Fake radar for testing
-
-        // _sensors[:carRelSpeed] = 75;
-        // _sensors[:carSpeed] = 95;
-        // _sensors[:carDanger] = 3;
-
     }
 
 
@@ -255,15 +142,11 @@ class GarminDashboardBlockView extends WatchUi.DataField {
         var labelColor;
 
         if (getBackgroundColor() == Graphics.COLOR_BLACK) {
-            _darkMode = true;
-            numColor = baseColors[:darkNumColor]; // Graphics.COLOR_WHITE
+            numColor = baseColors[:darkNumColor];
             labelColor = baseColors[:darkLabelColor]; // Graphics.COLOR_DK_GRAY
-            speedColors = baseColors[:darkSpeedColors];
         } else {
-            _darkMode = false;
-            numColor = baseColors[:sunNumColor]; // Graphics.COLOR_BLACK
+            numColor = baseColors[:sunNumColor];
             labelColor = baseColors[:sunLabelColor]; // Graphics.COLOR_LT_GRAY;
-            speedColors = baseColors[:sunSpeedColors];
         }
         (View.findDrawableById("Background") as Text).setColor(getBackgroundColor());
 
@@ -277,62 +160,24 @@ class GarminDashboardBlockView extends WatchUi.DataField {
                 }
             }
         }
-        drawSpeed(numColor);
+        setDrawableText("speed", formatSpeed());
         setDrawableText("avgSpeed", formatAvgSpd());
         setDrawableText("cadence", formatCadence());
         setDrawableText("distance", formatDistance(_sensors[:distance]));
         setDrawableText("timer", formatTime(_sensors[:timer]));
 
-        if (_layout.equals("2x2")) {
-            setDrawableText("slope", Math.round(_sensors[:slope]).format("%0.0f"));
-        } else {    // if (_layout.equals("2x1"))
-            setDrawableText("slope", _sensors[:slope].format("%0.1f"));
-        }
         setDrawableText("hrNum", _sensors[:hr].format("%u"));
-
-        if (View.findDrawableById("pulseBar") != null) {
-            (View.findDrawableById("pulseBar") as HRZoneBar).setOptions({
-                :hr => _sensors[:hr],
-                :background => getBackgroundColor(),
-            });
-        }
 
         View.onUpdate(dc);  // update the layouts, do it BEFORE extra drawing !!!!!!!
     }
 
 
-    //!  Colorized speed number, for triange dot we use ( and ) char
-    function drawSpeed( numColor ) {
-        var spdColor = numColor;
-        var deltaDot = ".";
-        if ((_sensors[:speed] > 1) && (_sensors[:avgSpeed] > 0) ) {
-            var deltaSpd = _sensors[:speed] - _sensors[:avgSpeed];
-            if (deltaSpd >= 0) {
-                spdColor = speedColors[0];
-                deltaDot = "(";     // UP 40
-            } else if (deltaSpd > -1) {
-                spdColor = speedColors[1];
-                deltaDot = ")";     // DOWN 41
-            } else {
-                spdColor = speedColors[2];
-                deltaDot = ")";     // DOWN
-            }
-        }
-        var elem = findDrawableById("speed");
-        if (elem instanceof Text) {
-            elem.setColor(spdColor);
-        }
-        var speed;
+    //! Format current speed without comparison coloring.
+    function formatSpeed() as String {
         if (_sensors[:speed] < 100) {
-            speed = _sensors[:speed].format("%0.1f");
-        } else {
-            speed = Math.round(_sensors[:speed]).format("%0.0f");
+            return _sensors[:speed].format("%0.1f");
         }
-        var dot = speed.find(".");
-        if (dot != null) {
-            speed = speed.substring(null, dot) + deltaDot + speed.substring(dot+1, null);
-        }
-        setDrawableText("speed", speed);
+        return Math.round(_sensors[:speed]).format("%0.0f");
     }
 
 
@@ -408,56 +253,6 @@ class GarminDashboardBlockView extends WatchUi.DataField {
     }
 
 
-    //!    GradeDataField from maca88
-    //!    @link https://github.com/maca88/SmartBikeLights/tree/master/Source/GradeDataField
-    function computeGradient(activityInfo as Activity.Info) {
-        //System.println("usedMemory=" + System.getSystemStats().usedMemory);
-        var altitude = activityInfo.altitude;
-        var elapsedDistance = activityInfo.elapsedDistance;
-        var gradientData = _gradientData;
-        if (gradientData[11] /* Enabled */ && altitude != null && elapsedDistance != null) {
-            var diffDistance = elapsedDistance - gradientData[8] /* Last elapsed distance */;
-            if (diffDistance > 0.5f && activityInfo.timerState == 3 /* TIMER_STATE_ON */) {
-                var timer = System.getTimer();
-                // Reset last estimate in case the GPS signal is lost to prevent abnormal gradients
-                if ((timer - gradientData[9]) > 3000) {
-                    //System.println("init d=" + elapsedDistance + " init a=" + altitude);
-                    gradientData[0] = altitude; // Reset altitude last estimate
-                    gradientData[4] = diffDistance; // Reset distance last estimate
-                }
-
-                gradientData[8] = elapsedDistance; // Update last elapsed distance
-                gradientData[9] = timer; // Update last calculation time
-                var lastEstimateAltitude = gradientData[0];
-                var currentEstimateAltitude = updateGradientData(altitude, 0); // Update estimated altitude
-                gradientData[10] = ((currentEstimateAltitude - lastEstimateAltitude) / updateGradientData(diffDistance, 4) /* Update estimated distance */) * 100; // Calculate gradient
-                //System.println("d=" + elapsedDistance + " a=" + altitude + " ca=" + currentEstimateAltitude + " ddiff=" + diffDistance + " cddiff=" + gradientData[4] + " cadiff=" + (currentEstimateAltitude - lastEstimateAltitude) + " grade=" + gradientData[10]);
-            } else {
-                gradientData[10] = 0f; // Reset last gradient
-            }
-        }
-        return gradientData[10];
-    }
-
-
-    //!    GradeDataField from maca88
-    //!    @link https://github.com/maca88/SmartBikeLights/tree/master/Source/GradeDataField
-    private function updateGradientData(value, index) {
-        // Calculate smooth gradient, applying simple kalman filter
-        var gradientData = _gradientData;
-        var lastEstimate = gradientData[index];
-        var errorEstimate = gradientData[index + 3];
-        var kalmanGain = errorEstimate / (errorEstimate + 5f /* Measure error */);
-        var currentEstimate = lastEstimate + kalmanGain * (value - lastEstimate);
-        var diffEstimate = (lastEstimate - currentEstimate).abs();
-        gradientData[index + 3] = (1f - kalmanGain) * errorEstimate + diffEstimate * gradientData[index + 2] /* Process noise */; // Update estimation error
-        gradientData[index + 1] = kalmanGain; // Update kalman gain
-        gradientData[index + 2] = 1f /* Max process noise */ / (1f + diffEstimate * diffEstimate); // Update process noise
-        gradientData[index] = currentEstimate; // Update last estimate
-        return currentEstimate;
-    }
-
-
     //! Safe setText(), set only if the id is valid
     function setDrawableText(pId, pValue) {
         var elem = View.findDrawableById(pId);
@@ -467,24 +262,4 @@ class GarminDashboardBlockView extends WatchUi.DataField {
     }
 
 
-    //! Set Radar info to _sensors
-    function updateRadar() as Void {
-        var radarDataAge = _radarListener.getDataAge();
-        if (_radarListener.maxSpeed <= 0 || radarDataAge >= 30) {
-            _radarListener.manualClear();
-            return;
-        }
-
-        _sensors[:carRelSpeed] = Math.round(_radarListener.maxSpeed * _speedMod);
-        _sensors[:carSpeed] = Math.round(_sensors[:carRelSpeed] + _sensors[:speed]);
-        if (radarDataAge > 10) {
-            _sensors[:carDanger] = 0; //unknown, data not recent
-        } else if ( _sensors[:carSpeed] <= (radarDangerLimits[0] / 3.6) * _speedMod   ) {
-            _sensors[:carDanger] = 1;
-        } else if ( _sensors[:carSpeed] <= (radarDangerLimits[1] / 3.6) * _speedMod  ) {
-            _sensors[:carDanger] = 2;
-        } else {
-            _sensors[:carDanger] = 3;
-        }
-    }
 }

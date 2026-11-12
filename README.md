@@ -22,12 +22,9 @@ Edge 540, Edge 840, Edge MTB
 
 | Data | Comment | 2x2 | 2x1 | 1x1 |
 | --- | --- | --- | --- | --- |
-| current speed | with color support (see below) | X | X* | X* |
 | average speed | | X | | |
 | current cadence | | X | X* | |
-| climb % | negative if slope | X | X | X* |
-| heart rate & zones | colorized bar | X | | |
-| radar speed | with color support | X | X | |
+| heart rate | | X | | |
 | distance travelled | | | X | X* |
 | moving time | | | X | X* |
 
@@ -35,17 +32,9 @@ Edge 540, Edge 840, Edge MTB
 
 ### Enhanced data fields
 
-**current speed** Its color marked: Green if the current speed is the same or faster than the average speed. Yellow if it is slower but not more than 1km/h or 1Mi/h, and orange if it is even slower than that. Also there is a triangled decimal dot, that show our speed is faster or slower than average (for color blinds or just simple a second sign).
-
-**climb %** It is calculated from measured data, if slope the number is negative.
-
 **current cadence** A small triangle show how the current cadence is for the average. UP if faster, DOWN if slower.
 
 **average speed** After the speed numbers it indicates when the speed is approaching the shift point: 0.02 / below (downward triangle) or 0.08 / above (upward triangle).
-
-**heart rate zones** The highest 3 color coded zone bar. The zone limits from your Garmin HR zones. On the top, there is the actual HR with number.
-
-**radar speed** Radar speed is colorized by danger level when a vehicle is detected.
 
 ## Garmin IQ store
 https://apps.garmin.com/en-US/apps/bf65ec33-0655-485c-83eb-bdecebcd23d4

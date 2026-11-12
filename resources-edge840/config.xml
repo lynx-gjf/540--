@@ -4,6 +4,6 @@
     <jsonData id="DeviceFontPaddings">[0, 0, 0, 0, 0, 5, 6, 8, 11]</jsonData>
     <font id="largeSpeedFont" filename="../resources/fonts/garminrobo-46.fnt" filter="[]()-.:0123456789"  antialias="true"/>
     <font id="mediumNumFont" filename="../resources/fonts/garminrobo-32.fnt" filter="[](),-.:0123456789"  antialias="true"/>
-    <font id="smallNumFont" filename="../resources/fonts/garminrobo-22.fnt" filter="[](),-.:0123456789"  antialias="true"/>
+    <font id="smallNumFont" filename="../resources/fonts/garminrobo-22.fnt" filter="[](),-.:0123456789kmih/"  antialias="true"/>
     <font id="bikeDataIconFont" filename="../resources/fonts/bikedataicons.fnt" filter="ABCDEFG" antialias="true"/>
 </resources>
