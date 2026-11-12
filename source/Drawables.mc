@@ -49,7 +49,7 @@ class HRZoneBar extends WatchUi.Drawable {
     //! background color
     var bgColor = Graphics.COLOR_WHITE;
     //! heartRate Zones
-    private var _hrZones as Array = [];
+    private var _hrZones as Array<Number> = [];
     //! HRZ graphic data [[height, color]]
     private var _hrZonesGraph as Array = [
         [0, 0xb1c9ea],

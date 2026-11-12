@@ -203,8 +203,8 @@ class GarminDashboardBlockView extends WatchUi.DataField {
 
         // realign all text where need
         for (var f=0; f<_alignText.size(); f++) {
-            var elem = findDrawableById(_alignText[f]) as Text;
-            if (elem != null) {
+            var elem = findDrawableById(_alignText[f]);
+            if (elem instanceof Text) {
                 _padding.reAlign(elem);
             }
         }
@@ -286,8 +286,8 @@ class GarminDashboardBlockView extends WatchUi.DataField {
         var colors = [[_colorLabelText, labelColor], [_colorDataText, numColor]];
         for (var c=0; c<colors.size(); c++) {
             for (var f=0; f<colors[c][0].size(); f++) {
-                var elem = findDrawableById(colors[c][0][f]) as Text;
-                if (elem != null) {
+                var elem = findDrawableById(colors[c][0][f]);
+                if (elem instanceof Text) {
                     elem.setColor(colors[c][1]);
                 }
             }
@@ -344,8 +344,8 @@ class GarminDashboardBlockView extends WatchUi.DataField {
                 deltaDot = ")";     // DOWN
             }
         }
-        var elem = findDrawableById("speed") as Text;
-        if (elem != null) {
+        var elem = findDrawableById("speed");
+        if (elem instanceof Text) {
             elem.setColor(spdColor);
         }
         var speed;
@@ -486,8 +486,8 @@ class GarminDashboardBlockView extends WatchUi.DataField {
 
     //! Safe setText(), set only if the id is valid
     function setDrawableText(pId, pValue) {
-        var elem = View.findDrawableById(pId) as Text;
-        if (elem != null) {
+        var elem = View.findDrawableById(pId);
+        if (elem instanceof Text) {
             elem.setText(pValue);
         }
     }
